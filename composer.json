@@ -1,7 +1,7 @@
 {
   "name" : "leaps/httpclient",
   "description" : "Leaps PHP Framework httpclient",
-  "version" : "1.0",
+  "version" : "1.1",
   "require" : {
     "php" : ">=5.4.0",
     "ext-mbstring" : "*",
