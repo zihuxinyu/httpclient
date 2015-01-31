@@ -1,7 +1,7 @@
 {
   "name" : "leaps/httpclient",
   "description" : "Leaps Httpclient library",
-  "version" : "1.2.0",
+  "version" : "1.2.1",
   "require" : {
     "php" : ">=5.4.0",
     "ext-mbstring" : "*",
@@ -23,7 +23,7 @@
   "keywords" : [ "leaps", "framework","httpclient" ],
   "autoload" : {
     "psr-4": {
-            "Leaps\\HttpClient\\": "src/"
+            "Leaps\\HttpClient\\": "src/Leaps/HttpClient/"
         }
   },
   "type" : "library",
