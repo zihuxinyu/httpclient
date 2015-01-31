@@ -53,7 +53,7 @@ class Result {
 						$this->headers [$m [1]] = $m [2];
 					}
 					if ($m [1] == 'Content-Type') {
-						if (preg_match ( '#^([a-zA-Z0-9\/.]+);\s+charset\=(.*)$#', $m [2], $m2 )) {
+						if (preg_match ( '#^([a-zA-Z0-9\/.]+); charset\=(.*)$#', $m [2], $m2 )) {
 							$this->contentType = MimeType::getSuffix($m2[1]);
 						}else if (preg_match ( '#^([a-zA-Z0-9\/.]+)$#', $m [2], $m2 )) {
 							$this->contentType = MimeType::getSuffix($m2[1]);
