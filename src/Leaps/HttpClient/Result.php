@@ -118,4 +118,11 @@ class Result {
 	public function __toString() {
 		return ( string ) $this->getBody ();
 	}
+
+	/**
+	 * 输出数组
+	 */
+	public function toArray(){
+		return get_object_vars($this);
+	}
 }

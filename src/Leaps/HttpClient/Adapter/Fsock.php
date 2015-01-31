@@ -56,6 +56,7 @@ class Fsock
 	protected $_postData = [ ];
 	protected $proxyHost = null;
 	protected $proxyPort = null;
+	protected $authorizationToken = null;
 
 	/**
 	 * 多列队任务进程数，0表示不限制
@@ -95,6 +96,15 @@ class Fsock
 	{
 		$this->_cookie = $cookies;
 		return $this;
+	}
+
+	/**
+	 * 设置认证帐户和密码
+	 * @param string $username
+	 * @param string $password
+	 */
+	public function setAuthorization($username,$password){
+		$this->authorizationToken = " Basic ".base64_encode("{$username}:{$password}");
 	}
 
 	/**
@@ -334,6 +344,9 @@ class Fsock
 			$connHost = $this->_ip ? $this->_ip : $hostname;
 		}
 		$header = [ 'Host' => $hostname,'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','Connection' => 'Close' ];
+		if(!is_null($this->authorizationToken)){//认证
+			$header ['Authorization'] = $this->authorizationToken;
+		}
 		if ($this->_userAgent) {
 			$header ['User-Agent'] = $this->_userAgent;
 		} elseif (array_key_exists ( 'HTTP_USER_AGENT', $_SERVER )) {

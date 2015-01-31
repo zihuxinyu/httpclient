@@ -86,6 +86,16 @@ class HttpClient
 		return $this;
 	}
 
+	/**
+	 * 设置认证帐户和密码
+	 * @param string $username
+	 * @param string $password
+	 */
+	public function setAuthorization($username,$password){
+		$this->driver->setAuthorization($username,$password);
+		return $this;
+	}
+
 	public function setCookie($cookie){
 		$this->driver->setCookie( $cookie );
 		return $this;
@@ -233,11 +243,11 @@ class HttpClient
 	 */
 	public function getDefaultDriver()
 	{
-		//if (function_exists ( "curl_init" )) {
-		//	return "Curl";
-		//} else {
+		if (function_exists ( "curl_init" )) {
+			return "Curl";
+		} else {
 			return "Fsock";
-		//}
+		}
 	}
 
 	/**

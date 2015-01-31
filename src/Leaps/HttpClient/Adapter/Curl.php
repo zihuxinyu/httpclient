@@ -55,6 +55,7 @@ class Curl
 
 	protected $proxyHost = null;
 	protected $proxyPort = null;
+	protected $authorizationToken = null;
 
 	/**
 	 * 待Post提交的数据
@@ -119,6 +120,15 @@ class Curl
 		$this->proxyHost = $host;
 		$this->proxyPort = $port;
 		return $this;
+	}
+
+	/**
+	 * 设置认证帐户和密码
+	 * @param string $username
+	 * @param string $password
+	 */
+	public function setAuthorization($username,$password){
+		$this->authorizationToken = "[$username]:[$password]";
 	}
 
 	/**
@@ -365,6 +375,10 @@ class Curl
 		if(!is_null($this->proxyHost) && !is_null($this->proxyPort)){
 			curl_setopt($ch,CURLOPT_PROXY,$this->proxyHost);
 			curl_setopt($ch,CURLOPT_PROXYPORT,$this->proxyPort);
+		}
+		if(!is_null($this->authorizationToken)){//认证
+			curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+			curl_setopt($ch, CURLOPT_USERPWD, $this->authorizationToken);
 		}
 		curl_setopt ( $ch, CURLOPT_TIMEOUT, $this->_timeout );
 		curl_setopt ( $ch, CURLOPT_CONNECTTIMEOUT_MS, self::$_connectTimeout );
