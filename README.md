@@ -19,7 +19,17 @@ setCookies($cookie)
 设置cookie内容，$cookie为字符串，多个cookie请用;隔开
 
 	(new \Leaps\HttpClient\HttpClient())->setCookies('a=1;b=a;c[0]=1;c[1]=2');
+    
+setProxy($host,$port)
+---------
+设置代理服务器地址
+(new \Leaps\HttpClient\HttpClient())->setProxy('username','password');
 
+setAuthorization($username,$password)
+---------
+设置基本认证的用户名和密码
+(new \Leaps\HttpClient\HttpClient())->setAuthorization('username','password');
+    
 setReferer($referer)
 ---------
 设置引用页
