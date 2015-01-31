@@ -22,9 +22,9 @@
   },
   "keywords" : [ "leaps", "framework","httpclient" ],
   "autoload" : {
-    "psr-0" : {
-      "Leaps" : "src"
-    }
+    "psr-4": {
+            "Leaps\\HttpClient\\": "src/"
+        }
   },
   "type" : "library",
   "license" : "Apache2",
