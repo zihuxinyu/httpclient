@@ -24,6 +24,12 @@ class MimeType {
 		return (isset ( $mimeTypes [$ext] ) ? $mimeTypes [$ext] : 'application/octet-stream');
 	}
 
+	public static function getSuffix($mimeType)
+	{
+		$mimeTypes = static::getMimeTypes();
+		return array_search($mimeType,$mimeTypes);
+	}
+
 	public static function getMimeTypes() {
 		return [
 			'3dml' => 'text/vnd.in3d.3dml',

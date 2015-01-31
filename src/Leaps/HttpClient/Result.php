@@ -23,6 +23,7 @@ class Result {
 	protected $httpCode = 0;
 	protected $headers = [ ];
 	protected $cookies = [ ];
+	protected $contentType = null;
 	protected $time = 0;
 
 	/**
@@ -50,6 +51,11 @@ class Result {
 						}
 					} else {
 						$this->headers [$m [1]] = $m [2];
+					}
+					if ($m [1] == 'Content-Type') {
+						if (preg_match ( '#^([a-zA-Z0-9\/.]+);(.*)$#', $this->headers ['Content-Type'], $m2 )) {
+							$this->contentType = MimeType::getSuffix($m2[1]);
+						}
 					}
 				}
 			}
@@ -85,6 +91,13 @@ class Result {
 		} else {
 			return $this->headers [$key];
 		}
+	}
+
+	/**
+	 * 获取响应的文档类型
+	 */
+	public function getContentType(){
+		return $this->contentType;
 	}
 
 	/**
