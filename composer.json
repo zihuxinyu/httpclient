@@ -16,9 +16,7 @@
   "keywords" : [ "leaps", "framework", "httpclient" ],
   "support" : {
     "issues" : "https://github.com/leaps/httpclient/issues?state=open",
-    "forum" : "http://leaps.tintsoft.com/forum/",
-    "wiki" : "http://leaps.tintsoft.com/wiki/",
-    "irc" : "irc://irc.freenode.net/leaps",
+    "wiki" : "https://github.com/leaps/httpclient/wiki",
     "source" : "https://github.com/tintsoft/leaps"
   },
   "autoload" : {
