@@ -22,7 +22,7 @@
   },
   "keywords" : [ "leaps", "framework","httpclient" ],
   "autoload" : {
-    "psr-0" : {
+    "psr-4" : {
       "Leaps" : "src"
     }
   },
