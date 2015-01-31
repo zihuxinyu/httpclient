@@ -1,6 +1,6 @@
 {
   "name" : "leaps/httpclient",
-  "description" : "Leaps PHP Framework httpclient",
+  "description" : "Leaps Httpclient library",
   "version" : "1.1",
   "require" : {
     "php" : ">=5.4.0",
@@ -26,7 +26,6 @@
       "Leaps" : "src"
     }
   },
-  "bin" : [ "leaps" ],
   "type" : "library",
   "license" : "Apache2",
   "homepage" : "http://leaps.tintsoft.com/"
