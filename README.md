@@ -1,5 +1,11 @@
 HttpClient 通过HTTP/HTTPS协议获取数据
 ===========
+安装
+===========
+"require" : {
+    "php" : ">=5.4.0"
+    "leaps/httpclient": "1.2.3",
+}
 
 $HttpClient = new \Leaps\HttpClient\HttpClient();
 -----------
