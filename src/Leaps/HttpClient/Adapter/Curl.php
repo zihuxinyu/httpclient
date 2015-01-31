@@ -53,6 +53,9 @@ class Curl
 	protected $_option = [ ];
 	protected $_timeout = 30;
 
+	protected $proxyHost = null;
+	protected $proxyPort = null;
+
 	/**
 	 * 待Post提交的数据
 	 *
@@ -105,6 +108,19 @@ class Curl
 		return $this;
 	}
 
+
+	/**
+	 * 设置代理服务器访问
+	 * @param string $host
+	 * @param string $port
+	 * @return \Leaps\HttpClient\HttpClient
+	 */
+	public function setProxy($host,$port){
+		$this->proxyHost = $host;
+		$this->proxyPort = $port;
+		return $this;
+	}
+
 	/**
 	 * 设置Cookie
 	 *
@@ -116,6 +132,7 @@ class Curl
 		$this->_cookie = $cookie;
 		return $this;
 	}
+
 
 	/**
 	 * 设置Header
@@ -345,6 +362,10 @@ class Curl
 		curl_setopt ( $ch, CURLOPT_FOLLOWLOCATION, true );
 		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt ( $ch, CURLOPT_ENCODING, 'gzip' );
+		if(!is_null($this->proxyHost) && !is_null($this->proxyPort)){
+			curl_setopt($ch,CURLOPT_PROXY,$this->proxyHost);
+			curl_setopt($ch,CURLOPT_PROXYPORT,$this->proxyPort);
+		}
 		curl_setopt ( $ch, CURLOPT_TIMEOUT, $this->_timeout );
 		curl_setopt ( $ch, CURLOPT_CONNECTTIMEOUT_MS, self::$_connectTimeout );
 		if ($matches ['scheme'] == 'https') {

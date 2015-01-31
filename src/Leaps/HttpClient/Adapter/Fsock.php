@@ -54,6 +54,8 @@ class Fsock
 	protected $_header = [ ];
 	protected $_option = [ ];
 	protected $_postData = [ ];
+	protected $proxyHost = null;
+	protected $proxyPort = null;
 
 	/**
 	 * 多列队任务进程数，0表示不限制
@@ -92,6 +94,18 @@ class Fsock
 	public function setCookie($cookies)
 	{
 		$this->_cookie = $cookies;
+		return $this;
+	}
+
+	/**
+	 * 设置代理服务器访问
+	 * @param string $host
+	 * @param string $port
+	 * @return \Leaps\HttpClient\HttpClient
+	 */
+	public function setProxy($host,$port){
+		$this->proxyHost = $host;
+		$this->proxyPort = $port;
 		return $this;
 	}
 
@@ -313,13 +327,12 @@ class Fsock
 		$matches = parse_url ( $url );
 		$hostname = $matches ['host'];
 		$uri = isset ( $matches ['path'] ) ? $matches ['path'] . (isset ( $matches ['query'] ) ? '?' . $matches ['query'] : '') : '/';
-		$port = isset ( $matches ['port'] ) ? intval ( $matches ['port'] ) : ($matches ['scheme'] == 'https' ? 443 : 80);
+		$connPort = isset ( $matches ['port'] ) ? intval ( $matches ['port'] ) : ($matches ['scheme'] == 'https' ? 443 : 80);
 		if ($matches ['scheme'] == 'https') {
-			$host = $this->_ip ? 'tls://' . $this->_ip : 'tls://' . $hostname;
+			$connHost = $this->_ip ? 'tls://' . $this->_ip : 'tls://' . $hostname;
 		} else {
-			$host = $this->_ip ? $this->_ip : $hostname;
+			$connHost = $this->_ip ? $this->_ip : $hostname;
 		}
-
 		$header = [ 'Host' => $hostname,'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','Connection' => 'Close' ];
 		if ($this->_userAgent) {
 			$header ['User-Agent'] = $this->_userAgent;
@@ -377,14 +390,21 @@ class Fsock
 		}
 		// 设置长度
 		$header ['Content-Length'] = strlen ( $vars );
-		$str = $this->_method . ' ' . $uri . ' HTTP/1.1' . "\r\n";
+		if(!is_null($this->proxyHost) && !is_null($this->proxyPort)){
+			$connHost = $this->proxyHost;
+			$connPort = $this->proxyPort;
+			$str = $this->_method . ' ' . $url . ' HTTP/1.1' . "\r\n";
+		}else{
+			$str = $this->_method . ' ' . $uri . ' HTTP/1.1' . "\r\n";
+		}
 		foreach ( $header as $k => $v ) {
 			$str .= $k . ': ' . str_replace ( array ("\r","\n" ), '', $v ) . "\r\n";
 		}
 		$str .= "\r\n";
 		if ($this->_timeout > ini_get ( 'max_execution_time' ))
 			@set_time_limit ( $this->_timeout );
-		$ch = @fsockopen ( $host, $port, $errno, $errstr, $this->_timeout );
+
+		$ch = @fsockopen ($connHost, $connPort, $errno, $errstr, $this->_timeout );
 		if (! $ch) {
 			//\Leaps\Debug::error ( "$errstr ($errno)" );
 			return false;

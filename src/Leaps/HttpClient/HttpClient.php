@@ -75,12 +75,21 @@ class HttpClient
 		return $this;
 	}
 
+	/**
+	 * 设置代理服务器访问
+	 * @param string $host
+	 * @param string $port
+	 * @return \Leaps\HttpClient\HttpClient
+	 */
+	public function setProxy($host,$port){
+		$this->driver->setProxy ( $host,$port);
+		return $this;
+	}
+
 	public function setCookie($cookie){
 		$this->driver->setCookie( $cookie );
 		return $this;
 	}
-
-
 
 	/**
 	 * HTTP GET方式请求
@@ -224,11 +233,11 @@ class HttpClient
 	 */
 	public function getDefaultDriver()
 	{
-		if (function_exists ( "curl_init" )) {
-			return "Curl";
-		} else {
+		//if (function_exists ( "curl_init" )) {
+		//	return "Curl";
+		//} else {
 			return "Fsock";
-		}
+		//}
 	}
 
 	/**
