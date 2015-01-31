@@ -28,6 +28,6 @@
   },
   "bin" : [ "leaps" ],
   "type" : "library",
-  "license" : "MIT",
+  "license" : "Apache2",
   "homepage" : "http://leaps.tintsoft.com/"
 }
